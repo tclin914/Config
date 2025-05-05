@@ -28,24 +28,12 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
-" SnipMate
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
+" Git
+Plugin 'rhysd/git-messenger.vim'
 
-" Plugin 'dense-analysis/ale'
-
-" let g:ale_fixers = {
-" \   'python': ['yapf', 'isort'],
-" \ }
-
-" noremap <F2> :ALEFix<CR>
-
-" Plugin 'psf/black'
-
-" Nix
-Plugin 'LnL7/vim-nix'
+nmap <Leader>g <Plug>(git-messenger)
+let g:git_messenger_include_diff = "all"
+let g:git_messenger_always_into_popup = 1
 
 call vundle#end()
 
@@ -91,10 +79,12 @@ filetype plugin on
 autocmd BufNewFile,BufRead *.nix set filetype=nix
 
 noremap <C-d> :sh<cr>
+noremap <C-n> :bnext<cr>
+noremap <C-p> :bprevious<cr>
 
 set t_Co=256
 
-" set expandtab
+set expandtab
 " set tabstop=8
 " set softtabstop=8
 set shiftwidth=4
@@ -112,6 +102,18 @@ set clipboard=unnamedplus
 set scrolloff=15
 
 syntax on
+
+" Enable syntax highlighting for LLVM files. To use, copy
+" utils/vim/syntax/llvm.vim to ~/.vim/syntax .
+augroup filetype
+  au! BufRead,BufNewFile *.ll     set filetype=llvm
+augroup END
+
+" Enable syntax highlighting for tablegen files. To use, copy
+" utils/vim/syntax/tablegen.vim to ~/.vim/syntax .
+augroup filetype
+  au! BufRead,BufNewFile *.td     set filetype=tablegen
+augroup END
 
 highlight Search ctermfg=black ctermbg=yellow
 highlight Visual ctermfg=black ctermbg=yellow
